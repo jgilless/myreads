@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 
 class Book extends Component {
-    state = {
-        progress: 'none'
-    };
-
-    handleChange = (e) => {
-        console.log(e);
-    }
+    state = {};
 
     render () {
-        const { title, authors, coverURL } = this.props;
+        const { title, authors, coverURL, onChangeBookProgress, progress } = this.props;
 
         return(
             <div className="book">
@@ -18,7 +12,10 @@ class Book extends Component {
                     <div className="book-cover" style={ { width: 128, height: 193, backgroundImage: `url("${ coverURL }")` } }>
                     </div>
                     <div className="book-shelf-changer">
-                        <select onChange={ this.handleChange }>
+                        <select
+                            value={ progress }
+                            onChange={ (event) => onChangeBookProgress(this.props, event.target.value) }
+                        >
                             <option value="none" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>

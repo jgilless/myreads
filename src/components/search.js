@@ -16,7 +16,6 @@ class Search extends Component {
             return;
         }
         BooksAPI.search(trimmedQuery, 10).then((response) => {
-            console.log(response);
             if (response && response.length) {
                 const books = response.map((book) => {
                     return {
@@ -34,6 +33,7 @@ class Search extends Component {
 
     render () {
         const { books } = this.state;
+        const { onChangeBookProgress } = this.props;
 
         return(
             <div className="search-books">
@@ -58,9 +58,12 @@ class Search extends Component {
                         books.map((book) => (
                             <li key={ book.title }>
                                 <Book
+                                    id={ book.id }
+                                    progress={ book.progress }
                                     authors={ book.authors }
                                     title={ book.title }
                                     coverURL={ book.coverURL }
+                                    onChangeBookProgress={ onChangeBookProgress }
                                 />
                             </li>
                         ))
