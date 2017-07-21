@@ -82,7 +82,6 @@ class BooksApp extends React.Component {
    * @param {string} progress
    */
   changeBookProgress = (book, updatedProgress) => {
-    console.log(book);
     const { books } = this.state;
     let bookIndex = books.findIndex((key) => {
       return key.id === book.id;
@@ -114,7 +113,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route path="/search" render={ () => (
           <Search
-            books={ books }
+            libraryBooks={ books }
             onChangeBookProgress={ this.changeBookProgress }
           />
         ) } />

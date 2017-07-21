@@ -10,6 +10,8 @@ class Search extends Component {
     };
 
     updateQuery = (query) => {
+        const { libraryBooks } = this.props;
+
         this.setState({ query: query });
         const trimmedQuery = query.trim();
         if (trimmedQuery === '') {
@@ -18,9 +20,12 @@ class Search extends Component {
         BooksAPI.search(trimmedQuery, 10).then((response) => {
             if (response && response.length) {
                 const books = response.map((book) => {
+                    const libBook = libraryBooks.find((libBook) => libBook.id === book.id);
+                    const progress = libBook ? libBook.progress : 'none';
+
                     return {
                         id: book.id,
-                        progress: 'none',
+                        progress: progress,
                         authors: book.authors,
                         title: book.title,
                         coverURL: book.imageLinks.thumbnail
@@ -56,7 +61,7 @@ class Search extends Component {
               <ol className="books-grid">
                     {
                         books.map((book) => (
-                            <li key={ book.title }>
+                            <li key={ book.id }>
                                 <Book
                                     id={ book.id }
                                     progress={ book.progress }
