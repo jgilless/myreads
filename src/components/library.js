@@ -5,13 +5,13 @@ import Bookshelf from './bookshelf';
 
 class Library extends Component {
 
-    _filterBooks = (progress) => {
+    _filterBooks = (shelf) => {
         const { books } = this.props;
-        return books.filter((book) => book.progress === progress);
+        return books.filter((book) => book.shelf === shelf);
     }
 
     render () {
-        const { onChangeBookProgress } = this.props;
+        const { onChangeBookShelf } = this.props;
 
         return(
             <div className="list-books">
@@ -23,17 +23,17 @@ class Library extends Component {
                 <Bookshelf
                   name="Currently Reading"
                   books={ this._filterBooks('currentlyReading') }
-                  onChangeBookProgress={ onChangeBookProgress }
+                  onChangeBookShelf={ onChangeBookShelf }
                 />
                 <Bookshelf
                   name="Want to Read"
                   books={ this._filterBooks('wantToRead') }
-                  onChangeBookProgress={ onChangeBookProgress }
+                  onChangeBookShelf={ onChangeBookShelf }
                 />
                 <Bookshelf
                   name="Read"
                   books={ this._filterBooks('read') }
-                  onChangeBookProgress={ onChangeBookProgress }
+                  onChangeBookShelf={ onChangeBookShelf }
                 />
               </div>
             </div>

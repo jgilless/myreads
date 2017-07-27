@@ -3,33 +3,34 @@ import React, { Component } from 'react';
 class Book extends Component {
     constructor () {
         super();
-        this.state = { progress: 'none' };
+        this.state = { shelf: 'none' };
     }
 
-    changeBookProgress (value) {
-        const { onChangeBookProgress } = this.props;
-        onChangeBookProgress(this.props, value);
-        this.setState({ progress: value });
+    changeBookShelf (value) {
+        const { onChangeBookShelf } = this.props;
+        onChangeBookShelf(this.props, value);
+        this.setState({ shelf: value });
     };
 
     componentDidMount () {
-        const { progress } = this.props;
-        this.setState({ progress });
+        const { shelf } = this.props;
+        this.setState({ shelf });
     };
 
     render () {
-        const { title, authors, coverURL } = this.props;
-        const { progress } = this.state;
+        const { title, authors, imageLinks } = this.props;
+        const { thumbnail } = imageLinks;
+        const { shelf } = this.state;
 
         return(
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={ { width: 128, height: 193, backgroundImage: `url("${ coverURL }")` } }>
+                    <div className="book-cover" style={ { width: 128, height: 193, backgroundImage: `url("${ thumbnail }")` } }>
                     </div>
                     <div className="book-shelf-changer">
                         <select
-                            value={ progress }
-                            onChange={ (event) => this.changeBookProgress(event.target.value) }
+                            value={ shelf }
+                            onChange={ (event) => this.changeBookShelf(event.target.value) }
                         >
                             <option value="none" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>

@@ -21,14 +21,16 @@ class Search extends Component {
             if (response && response.length) {
                 const books = response.map((book) => {
                     const libBook = libraryBooks.find((libBook) => libBook.id === book.id);
-                    const progress = libBook ? libBook.progress : 'none';
+                    const shelf = libBook ? libBook.shelf : 'none';
 
                     return {
                         id: book.id,
-                        progress: progress,
+                        shelf: shelf,
                         authors: book.authors,
                         title: book.title,
-                        coverURL: book.imageLinks.thumbnail
+                        imageLinks: {
+                            thumbnail: book.imageLinks.thumbnail
+                        }
                     };
                 });
                 this.setState({ books });
@@ -38,7 +40,7 @@ class Search extends Component {
 
     render () {
         const { books } = this.state;
-        const { onChangeBookProgress } = this.props;
+        const { onChangeBookShelf } = this.props;
 
         return(
             <div className="search-books">
@@ -64,11 +66,11 @@ class Search extends Component {
                             <li key={ book.id }>
                                 <Book
                                     id={ book.id }
-                                    progress={ book.progress }
+                                    shelf={ book.shelf }
                                     authors={ book.authors }
                                     title={ book.title }
-                                    coverURL={ book.coverURL }
-                                    onChangeBookProgress={ onChangeBookProgress }
+                                    imageLinks={ book.imageLinks }
+                                    onChangeBookShelf={ onChangeBookShelf }
                                 />
                             </li>
                         ))
