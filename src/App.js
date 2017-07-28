@@ -15,53 +15,31 @@ class BooksApp extends React.Component {
     });
   }
 
-  addBook = (book) => {
-    const { shelf } = book;
-    BooksAPI.update(book, shelf).then(this.setState({
-      books: this.state.books.concat(book)
-    }));
-
-    BooksAPI.getAll().then((books) => {
-      console.log(books);
-    });
-  };
-
   /**
-   * Changes a books state or Adds it to the Library in a state
+   * Change a books shelf or Adds it to the Library in a shelf
    * @param {string} id
    * @param {string} shelf
    */
-  changeBookShelf = (book, updatedShelf) => {
+  updateBookShelf = (book, updatedShelf) => {
     const { books } = this.state;
-    let bookIndex = books.findIndex((key) => {
+
+    const bookIndex = books.findIndex((key) => {
       return key.id === book.id;
     });
+
+    let stateBooks = Object.assign([], books);
+
     if (bookIndex === -1) {
       const newBook = Object.assign({}, book);
       newBook.shelf = updatedShelf;
-      this.addBook(newBook);
-      return;
+      stateBooks.push(newBook);
+    } else {
+      stateBooks[bookIndex] = Object.assign({}, stateBooks[bookIndex]);
+      stateBooks[bookIndex].shelf = updatedShelf;
     }
-
-    const stateBooks = Object.assign([], books);
-    stateBooks[bookIndex] = Object.assign({}, stateBooks[bookIndex]);
-    stateBooks[bookIndex].shelf = updatedShelf;
 
     BooksAPI.update(book, updatedShelf).then(
       this.setState({ books: stateBooks })
-    );
-  };
-
-  removeBook = (book) => {
-    BooksAPI.update(book, 'none').then(
-      this.setState((state) => ({
-        books: state.books.map((b) => {
-          if (b.id === book.id) {
-            b.shelf = 'none';
-          }
-          return b;
-        })
-      }))
     );
   };
 
@@ -75,15 +53,17 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route path="/search" render={ () => (
+          //Search Page
           <Search
             libraryBooks={ books }
-            onChangeBookShelf={ this.changeBookShelf }
+            updateBookShelf={ this.updateBookShelf }
           />
         ) } />
         <Route exact path="/" render={ () => (
+          //Library Page
           <Library
             books={ books }
-            onChangeBookShelf={ this.changeBookShelf }
+            updateBookShelf={ this.updateBookShelf }
           />
         ) } />
       </div>

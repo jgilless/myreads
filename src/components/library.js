@@ -11,7 +11,7 @@ class Library extends Component {
     }
 
     render () {
-        const { onChangeBookShelf } = this.props;
+        const { updateBookShelf } = this.props;
 
         return(
             <div className="list-books">
@@ -23,17 +23,17 @@ class Library extends Component {
                 <Bookshelf
                   name="Currently Reading"
                   books={ this._filterBooks('currentlyReading') }
-                  onChangeBookShelf={ onChangeBookShelf }
+                  updateBookShelf={ updateBookShelf }
                 />
                 <Bookshelf
                   name="Want to Read"
                   books={ this._filterBooks('wantToRead') }
-                  onChangeBookShelf={ onChangeBookShelf }
+                  updateBookShelf={ updateBookShelf }
                 />
                 <Bookshelf
                   name="Read"
                   books={ this._filterBooks('read') }
-                  onChangeBookShelf={ onChangeBookShelf }
+                  updateBookShelf={ updateBookShelf }
                 />
               </div>
             </div>

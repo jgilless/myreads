@@ -7,8 +7,9 @@ class Book extends Component {
     }
 
     changeBookShelf (value) {
-        const { onChangeBookShelf } = this.props;
-        onChangeBookShelf(this.props, value);
+        const { updateBookShelf } = this.props;
+        updateBookShelf(this.props, value);
+        //Local state set to update instantly on the search page without a refresh HOCs
         this.setState({ shelf: value });
     };
 

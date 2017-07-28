@@ -4,11 +4,19 @@ import * as BooksAPI from '../utils/BooksAPI';
 import Book from './book';
 
 class Search extends Component {
-    state = {
-        query: '',
-        books: []
-    };
 
+    constructor () {
+        super();
+        this.state = {
+            query: '',
+            books: []
+        };
+    }
+
+    /**
+     * Update the query to hit the api with, search the api with that query and set the state of the page
+     * @param {string} query string request to hit api with
+     */
     updateQuery = (query) => {
         const { libraryBooks } = this.props;
 
@@ -40,7 +48,7 @@ class Search extends Component {
 
     render () {
         const { books } = this.state;
-        const { onChangeBookShelf } = this.props;
+        const { updateBookShelf } = this.props;
 
         return(
             <div className="search-books">
@@ -70,7 +78,7 @@ class Search extends Component {
                                     authors={ book.authors }
                                     title={ book.title }
                                     imageLinks={ book.imageLinks }
-                                    onChangeBookShelf={ onChangeBookShelf }
+                                    updateBookShelf={ updateBookShelf }
                                 />
                             </li>
                         ))
